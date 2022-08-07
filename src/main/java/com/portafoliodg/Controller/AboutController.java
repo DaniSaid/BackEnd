@@ -4,6 +4,7 @@ import com.portafoliodg.Interface.IAboutService;
 import com.portafoliodg.Model.About;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,12 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class AboutController {
     @Autowired IAboutService iaboutService;
     
     @GetMapping("about/traer")
-    public List<About> getAbout(){
-        return iaboutService.getAbout();
+    public List<About> getAbouts(){
+        return iaboutService.getAbouts();
+    }
+    
+    // el numero 3 es el id del registro about en la base de datos
+    @GetMapping("/about/traer/perfil")
+    public About findAbout(){
+        return iaboutService.findAbout((long)3);
     }
     
     @PostMapping("about/crear")
