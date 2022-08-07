@@ -4,8 +4,8 @@ import com.portafoliodg.Model.About;
 import java.util.List;
 
 public interface IAboutService {
-    //traer about
-    public List<About> getAbout();
+    //traer abouts
+    public List<About> getAbouts();
     
     //guardar objeto de tipo persona
     public void saveAbout (About about);

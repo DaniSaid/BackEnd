@@ -14,7 +14,7 @@ public class ImpAboutService implements IAboutService{
     IAboutRepository iaboutRepository;
 
     @Override
-    public List<About> getAbout() {
+    public List<About> getAbouts() {
         
         List<About> about = iaboutRepository.findAll();
         return about;
@@ -38,5 +38,7 @@ public class ImpAboutService implements IAboutService{
         
         iaboutRepository.deleteById(id);
     }
+
+    
     
 }
