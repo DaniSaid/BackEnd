@@ -5,7 +5,6 @@ import com.portafoliodg.Repository.AboutRepository;
 import com.portafoliodg.to.Portfolio;
 import com.portafoliodg.to.State;
 import java.util.List;
-import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,12 @@ public class PortfolioServices {
         return about;
     }
     
+    public void deleteAbout(Long id){
+       
+        aboutRepo.deleteById(id);
+        
+    }
+    
     public Portfolio getPortfolio(long aboutId){
         //recupera los datos de about desde el repositorio(la persistencia)
         About about = aboutRepo.findById(aboutId).orElse(null);
@@ -41,12 +46,6 @@ public class PortfolioServices {
         //queda agregar los demas componentes
         
         return portfolio;
-        
-    }
-    
-    public void deleteAbout(Long id){
-       
-        aboutRepo.deleteById(id);
         
     }
     

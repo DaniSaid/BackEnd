@@ -24,6 +24,10 @@ public class Controller {
     @Autowired
     private PortfolioServices portfolioS;
     
+    @GetMapping("/portfolio/{id}")
+    Portfolio getPortfolio(@PathVariable int id){
+        return portfolioS.getPortfolio(id);
+    }
     //About 
     @GetMapping("/portfolio/about")
     List<About> getAbout(){
