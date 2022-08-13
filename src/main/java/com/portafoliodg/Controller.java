@@ -34,12 +34,6 @@ public class Controller {
         return portfolioS.getAbout();
     }
     
-    @GetMapping("/portfolio/about/{id}")
-    About findAbout(@PathVariable Long id){
-        return portfolioS.findAbout(id);
-    }
-    
-    
     @PostMapping("/portfolio/about/create")
     State createAbout(@RequestBody About about){
         portfolioS.saveAbout(about);
