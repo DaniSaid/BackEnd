@@ -29,10 +29,16 @@ public class Controller {
         return portfolioS.getPortfolio(id);
     }
     //About 
-    @GetMapping("/portfolio/about")
+    @GetMapping("/about")
     List<About> getAbout(){
         return portfolioS.getAbout();
     }
+    
+    @GetMapping("/portfolio/about/{id}")
+    About findAbout(@PathVariable Long id){
+        return portfolioS.findAbout(id);
+    }
+    
     
     @PostMapping("/portfolio/about/create")
     State createAbout(@RequestBody About about){
