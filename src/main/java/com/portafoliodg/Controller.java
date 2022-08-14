@@ -1,6 +1,7 @@
 package com.portafoliodg;
 
 import com.portafoliodg.Entity.About;
+import com.portafoliodg.Entity.Tool;
 import com.portafoliodg.Service.PortfolioServices;
 import com.portafoliodg.to.Portfolio;
 import com.portafoliodg.to.State;
@@ -30,6 +31,7 @@ public class Controller {
     }
     //About 
     @GetMapping("/about")
+    @ResponseBody
     List<About> getAbout(){
         return portfolioS.getAbout();
     }
@@ -71,4 +73,38 @@ public class Controller {
         
         return new State(true, "about borrado");
     }
+    
+    //--------------------Tool ----------------------
+    
+    @GetMapping("/tools")
+    @ResponseBody
+    public List<Tool> getTool(){
+        return portfolioS.getTool();
+    }
+    
+    @PostMapping("/portfolio/tool/create")
+    public State createTool(@RequestBody Tool tool){
+        portfolioS.saveTool(tool);
+        
+        return new State(true, "se creó correctamente");
+    }
+    
+    @DeleteMapping("/portfolio/tool/delete/{id}")
+    public State deleteTool(@PathVariable Long id){
+        
+        portfolioS.deleteTool(id);
+        
+        return new State(true, "borrado correctamente");
+    }
+    
+    @PutMapping("/portfolio/tool/edit/{id}")
+    public State editTool(@PathVariable Long id, @RequestBody Tool tool){
+        if (!portfolioS.editTool(id, tool)) {
+            return new State(false, "el id no existe");
+        }
+        
+        return new State(true, "se editó correctamente");
+    }
+    
+    //--------------------    ---------------------
 }
