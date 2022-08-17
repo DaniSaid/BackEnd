@@ -13,23 +13,23 @@ public class About {
     private Long id;
     
     private String nombre;
-    private String apellido;
     private String provincia;
     private String pais;
     private String titulo;
     private String descripcion;
-
+    private String imagen;
+    
     public About() {
     }
 
-    public About(Long id, String nombre, String apellido, String provincia, String pais, String titulo, String descripcion) {
+    public About(Long id, String nombre, String provincia, String pais, String titulo, String descripcion, String imagen) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.nombre = nombre;  
         this.provincia = provincia;
         this.pais = pais;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
   
@@ -48,15 +48,7 @@ public class About {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
+    
     public String getProvincia() {
         return provincia;
     }
@@ -89,7 +81,13 @@ public class About {
         this.descripcion = descripcion;
     }
     
+    public String getImagen(){
+        return imagen;
+    }
     
+    public void setImagen(String imagen){
+        this.imagen = imagen;
+    }
     
     
 }

@@ -17,7 +17,24 @@ public class PortfolioServices implements ITool{
     @Autowired AboutRepository aboutRepo;
     @Autowired ToolRepository toolRepo;
     
-    public List<About> getAbout(){
+    //-----------Portafolio-----------------
+    public Portfolio getPortfolio(long aboutId){
+        //recupera los datos de about desde el repositorio(la persistencia)
+        About about = aboutRepo.findById(aboutId).orElse(null);
+        
+        
+        //manda la info al portfolio
+        Portfolio portfolio = new Portfolio();
+        portfolio.setAbout(about);
+        //queda agregar los demas componentes
+        
+        return portfolio;
+        
+    }
+    
+    //------------Acerca de ------------------
+    
+    public List<About> getAboutList(){
 		List<About> about = aboutRepo.findAll();
                 
                 return about;
@@ -33,23 +50,19 @@ public class PortfolioServices implements ITool{
         return about;
     }
     
+    public State editAbout(About about){
+        if (about!=null && aboutRepo.existsById(about.getId())) {
+            aboutRepo.save(about);
+            
+            return new State(true, "Acerca de, actualizado");
+        }
+        
+        return new State(false, "Acerca de, no se ha actualizado");
+    }
+    
     public void deleteAbout(Long id){
        
         aboutRepo.deleteById(id);
-        
-    }
-    
-    public Portfolio getPortfolio(long aboutId){
-        //recupera los datos de about desde el repositorio(la persistencia)
-        About about = aboutRepo.findById(aboutId).orElse(null);
-        
-        
-        //manda la info al portfolio
-        Portfolio portfolio = new Portfolio();
-        portfolio.setAbout(about);
-        //queda agregar los demas componentes
-        
-        return portfolio;
         
     }
     

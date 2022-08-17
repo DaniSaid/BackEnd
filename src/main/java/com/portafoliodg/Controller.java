@@ -30,10 +30,16 @@ public class Controller {
         return portfolioS.getPortfolio(id);
     }
     //About 
-    @GetMapping("/about")
+    @GetMapping("/about-lista")
     @ResponseBody
-    List<About> getAbout(){
-        return portfolioS.getAbout();
+    List<About> getAboutList(){
+        return portfolioS.getAboutList();
+    }
+    
+    @GetMapping("/about")
+    About getAbout(){
+        long id = 2;
+        return portfolioS.findAbout(id);
     }
     
     @PostMapping("/portfolio/about/create")
@@ -43,27 +49,9 @@ public class Controller {
         return new State(true, "about creado");
     }
     
-    @PutMapping("/portfolio/about/edit/2")
-    About editAbout(@RequestParam("nombre") String nombre,
-                    @RequestParam(name = "apellido" ,required=false) String apellido,
-                    @RequestParam(name= "provincia",required=false) String provincia,
-                    @RequestParam(name= "pais",required=false) String pais,
-                    @RequestParam(name= "titulo",required=false) String titulo,
-                    @RequestParam(name= "descripcion",required=false) String descripcion){
-    
-        long id = 2;
-        About about = portfolioS.findAbout(id);
-        
-        about.setNombre(nombre);
-        about.setApellido(apellido);
-        about.setProvincia(provincia);
-        about.setPais(pais);
-        about.setTitulo(titulo);
-        about.setDescripcion(descripcion);
-        
-        portfolioS.saveAbout(about);
-        
-        return about;
+    @PostMapping("/portfolio/about/edit")
+    State editAboutData(@RequestBody About about){
+        return portfolioS.editAbout(about);
     }
     
     @DeleteMapping("/portfolio/about/delete/2")
@@ -102,7 +90,7 @@ public class Controller {
         if (!portfolioS.editTool(id, tool)) {
             return new State(false, "el id no existe");
         }
-        
+        portfolioS.saveTool(tool);
         return new State(true, "se editó correctamente");
     }
     
