@@ -1,21 +1,32 @@
 package com.portafoliodg.Service;
 
 import com.portafoliodg.Entity.About;
+import com.portafoliodg.Entity.Experience;
+import com.portafoliodg.Entity.Skill;
 import com.portafoliodg.Entity.Tool;
+import com.portafoliodg.Interface.IExperience;
+import com.portafoliodg.Interface.ISkill;
 import com.portafoliodg.Interface.ITool;
 import com.portafoliodg.Repository.AboutRepository;
+import com.portafoliodg.Repository.ExperienceRepository;
+import com.portafoliodg.Repository.SkillRepository;
 import com.portafoliodg.Repository.ToolRepository;
 import com.portafoliodg.to.Portfolio;
 import com.portafoliodg.to.State;
 import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PortfolioServices implements ITool{
+@Transactional
+public class PortfolioServices implements ITool, ISkill, IExperience{
     
     @Autowired AboutRepository aboutRepo;
     @Autowired ToolRepository toolRepo;
+    @Autowired SkillRepository skillRepo;
+    @Autowired ExperienceRepository expRepo;
     
     //-----------Portafolio-----------------
     public Portfolio getPortfolio(long aboutId){
@@ -105,6 +116,65 @@ public class PortfolioServices implements ITool{
             toolRepo.save(tool);
             return true;
     }
+    
+    //-------------implementacion de metodos Skill--------------------
+    @Override
+    public List<Skill> getSkills() {
+        return skillRepo.findAll();
+    }
 
+    @Override
+    public void saveSkill(Skill skill) {
+        skillRepo.save(skill);
+    }
+
+    @Override
+    public void deleteSkill(Long id) {
+        skillRepo.deleteById(id);
+    }
+
+    @Override
+    public boolean editSkill(Long id, Skill skill) {
+        if (!skillRepo.existsById(id)) {
+            return false;
+        }
+            skill.setId(id);
+            skillRepo.save(skill);
+            
+            return true;
+    }
+
+    @Override
+    public Skill getSkillById(Long id) {
+        
+        Skill skill = skillRepo.findById(id).orElse(null);
+        return skill;
+    }
+
+    //-------------implementacion de metodos Experiencia--------------------
+    @Override
+    public List<Experience> getExperiences() {
+        return expRepo.findAll();
+    }
+
+    @Override
+    public Optional<Experience> getExpById(Long id) {
+         return expRepo.findById(id);
+    }
+
+    @Override
+    public void saveExp(Experience exp) {
+        expRepo.save(exp);
+    }
+
+    @Override
+    public void deleteExp(Long id) {
+        expRepo.deleteById(id);
+    }
+
+    @Override
+    public boolean expExistsById(Long id) {
+        return expRepo.existsById(id);
+    }
 
 }
