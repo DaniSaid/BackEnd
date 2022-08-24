@@ -1,6 +1,7 @@
 package com.portafoliodg.to;
 
 import com.portafoliodg.Entity.About;
+import com.portafoliodg.Entity.Education;
 import com.portafoliodg.Entity.Experience;
 import com.portafoliodg.Entity.Skill;
 import com.portafoliodg.Entity.Tool;
@@ -16,5 +17,5 @@ public class Portfolio {
     private Tool tool;
     private Skill skill;
     private Experience experience;
-    
+    private Education education;
 }

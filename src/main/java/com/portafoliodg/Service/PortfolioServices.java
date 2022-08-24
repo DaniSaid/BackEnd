@@ -1,13 +1,16 @@
 package com.portafoliodg.Service;
 
 import com.portafoliodg.Entity.About;
+import com.portafoliodg.Entity.Education;
 import com.portafoliodg.Entity.Experience;
 import com.portafoliodg.Entity.Skill;
 import com.portafoliodg.Entity.Tool;
+import com.portafoliodg.Interface.IEducation;
 import com.portafoliodg.Interface.IExperience;
 import com.portafoliodg.Interface.ISkill;
 import com.portafoliodg.Interface.ITool;
 import com.portafoliodg.Repository.AboutRepository;
+import com.portafoliodg.Repository.EducationRepository;
 import com.portafoliodg.Repository.ExperienceRepository;
 import com.portafoliodg.Repository.SkillRepository;
 import com.portafoliodg.Repository.ToolRepository;
@@ -21,12 +24,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class PortfolioServices implements ITool, ISkill, IExperience{
+public class PortfolioServices implements ITool, ISkill, IExperience, IEducation{
     
     @Autowired AboutRepository aboutRepo;
     @Autowired ToolRepository toolRepo;
     @Autowired SkillRepository skillRepo;
     @Autowired ExperienceRepository expRepo;
+    @Autowired EducationRepository eduRepo;
     
     //-----------Portafolio-----------------
     public Portfolio getPortfolio(long aboutId){
@@ -77,22 +81,16 @@ public class PortfolioServices implements ITool, ISkill, IExperience{
         
     }
     
-    //mensajes de alta o error
-    public State updateAboutData(About about){
-        if (about !=null && aboutRepo.existsById(about.getId())) {
-            aboutRepo.save(about);
-            
-            return new State(true, "perfil Actualizado");
-        }
-        
-        return new State(false, "no se puedo actualizar el perfil");
-    }
-    
-    //-------------implementacion de metodos  Tool--------------------
+    //-------------Herramientas--------------------
 
     @Override
-    public List<Tool> getTool() {
+    public List<Tool> getToolList() {
         return toolRepo.findAll();
+    }
+    
+    @Override
+    public Optional<Tool> getToolById(Long id) {
+        return toolRepo.findById(id);
     }
 
     @Override
@@ -106,21 +104,20 @@ public class PortfolioServices implements ITool, ISkill, IExperience{
     }
 
     @Override
-    public boolean editTool(Long id, Tool tool) {
-        
-        if (!toolRepo.existsById(id)) {
-      
-            return false;
-        }
-            tool.setId(id);
-            toolRepo.save(tool);
-            return true;
+    public boolean toolExistsById(Long id) {
+        return toolRepo.existsById(id);
     }
     
     //-------------implementacion de metodos Skill--------------------
     @Override
-    public List<Skill> getSkills() {
+    public List<Skill> getSkillList() {
         return skillRepo.findAll();
+    }
+    
+    @Override
+    public Optional<Skill> getSkillById(Long id) {
+        
+        return skillRepo.findById(id);
     }
 
     @Override
@@ -134,22 +131,10 @@ public class PortfolioServices implements ITool, ISkill, IExperience{
     }
 
     @Override
-    public boolean editSkill(Long id, Skill skill) {
-        if (!skillRepo.existsById(id)) {
-            return false;
-        }
-            skill.setId(id);
-            skillRepo.save(skill);
-            
-            return true;
+    public boolean skillExistsById(Long id) {
+        return skillRepo.existsById(id);
     }
 
-    @Override
-    public Skill getSkillById(Long id) {
-        
-        Skill skill = skillRepo.findById(id).orElse(null);
-        return skill;
-    }
 
     //-------------implementacion de metodos Experiencia--------------------
     @Override
@@ -176,5 +161,33 @@ public class PortfolioServices implements ITool, ISkill, IExperience{
     public boolean expExistsById(Long id) {
         return expRepo.existsById(id);
     }
+    
+    //-------------implementacion de metodos Educación--------------------
+
+    @Override
+    public List<Education> getEducationList() {
+        return eduRepo.findAll();
+    }
+    
+    @Override
+    public Optional<Education> getEducationById(Long id) {
+        return eduRepo.findById(id);
+    }
+
+    @Override
+    public void saveEducation(Education edu) {
+        eduRepo.save(edu);
+    }
+    
+    @Override
+    public void deleteEducation(Long id) {
+        eduRepo.deleteById(id);
+    }
+
+    @Override
+    public boolean eduExistsById(Long id) {
+        return eduRepo.existsById(id);
+    }
+
 
 }
