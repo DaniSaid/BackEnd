@@ -21,9 +21,9 @@ public class Tool {
     public Tool() {
     }
 
-    public Tool(Long id, String nombre) {
-        this.id = id;
+    public Tool(String nombre, String Imagen) {
         this.nombre = nombre;
+        this.imagen = imagen;
     }
     
     

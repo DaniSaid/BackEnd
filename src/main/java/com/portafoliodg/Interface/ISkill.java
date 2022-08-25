@@ -2,17 +2,17 @@ package com.portafoliodg.Interface;
 
 import com.portafoliodg.Entity.Skill;
 import java.util.List;
+import java.util.Optional;
 
 public interface ISkill {
     
-    public List<Skill> getSkills();
+    public List<Skill> getSkillList();
     
-    public Skill getSkillById(Long id);
+    public Optional<Skill> getSkillById(Long id);
     
     public void saveSkill(Skill skill);
     
     public void deleteSkill(Long id);
-    
-    public boolean editSkill(Long id, Skill skill);
-    
+   
+    public boolean skillExistsById(Long id);
 }
