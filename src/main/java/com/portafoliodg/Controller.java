@@ -138,6 +138,14 @@ public class Controller {
         return new ResponseEntity(skill, HttpStatus.OK);
     }
     
+    @PostMapping("/skill/create")
+    public ResponseEntity<?> createSkill(@RequestBody SkillDTO skillDTO){
+      
+        Skill skill =  new Skill(skillDTO.getSkill(),skillDTO.getProgress());
+        portfolioS.saveSkill(skill);
+        return new ResponseEntity(new State(true,"habilidad agregada!"),HttpStatus.OK);
+    }
+    
     
     @PutMapping("/skill/update/{id}")
     public ResponseEntity<?> updateSkill(@PathVariable("id") Long id, @RequestBody SkillDTO skillDTO){

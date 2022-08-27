@@ -15,13 +15,15 @@ public class Skill {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String skill;
+    private int progress;
 
     public Skill() {
     }
 
-    public Skill(String skill) {
+    public Skill(String skill, int progress) {
        
         this.skill = skill;
+        this.progress = progress;
     }
     
     
