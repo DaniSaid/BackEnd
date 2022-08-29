@@ -13,7 +13,6 @@ import com.portafoliodg.to.SkillDTO;
 import com.portafoliodg.to.State;
 import com.portafoliodg.to.ToolDTO;
 import java.util.List;
-import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,22 +46,19 @@ public class Controller {
         return portfolioS.getAboutList();
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/portfolio/about/create")
+    @PostMapping("/about/create")
     State createAbout(@RequestBody About about){
         portfolioS.saveAbout(about);
         
         return new State(true, "about creado");
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/portfolio/about/edit")
+    @PutMapping("/about/edit")
     State editAboutData(@RequestBody About about){
         return portfolioS.editAbout(about);
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/portfolio/about/delete/{id}")
+    @DeleteMapping("/about/delete/{id}")
     State deleteAbout(@PathVariable Long id){
         portfolioS.deleteAbout(id);
         return new State(true, "about borrado");
