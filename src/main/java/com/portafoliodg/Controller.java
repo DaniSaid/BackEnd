@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,8 @@ public class Controller {
     List<About> getAboutList(){
         return portfolioS.getAboutList();
     }
-   
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/portfolio/about/create")
     State createAbout(@RequestBody About about){
         portfolioS.saveAbout(about);
@@ -53,16 +55,16 @@ public class Controller {
         return new State(true, "about creado");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/portfolio/about/edit")
     State editAboutData(@RequestBody About about){
         return portfolioS.editAbout(about);
     }
     
-    @DeleteMapping("/portfolio/about/delete/2")
-    State deleteAbout(){
-        long id = 2;
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/portfolio/about/delete/{id}")
+    State deleteAbout(@PathVariable Long id){
         portfolioS.deleteAbout(id);
-        
         return new State(true, "about borrado");
     }
     
