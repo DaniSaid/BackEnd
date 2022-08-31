@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@CrossOrigin(origins = "https://hosting-angular-e585e.web.app")
 public class PortafoliodgApplication {
 
 	public static void main(String[] args) {
