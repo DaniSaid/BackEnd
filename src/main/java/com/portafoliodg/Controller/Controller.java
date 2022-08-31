@@ -1,4 +1,4 @@
-package com.portafoliodg;
+package com.portafoliodg.Controller;
 
 import com.portafoliodg.Entity.About;
 import com.portafoliodg.Entity.Education;
