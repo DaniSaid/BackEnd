@@ -21,7 +21,7 @@ public class Tool {
     public Tool() {
     }
 
-    public Tool(String nombre, String Imagen) {
+    public Tool(String nombre, String imagen) {
         this.nombre = nombre;
         this.imagen = imagen;
     }
