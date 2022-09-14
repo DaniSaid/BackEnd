@@ -16,14 +16,16 @@ public class Skill {
     private Long id;
     private String skill;
     private int progress;
+    private String icon;
 
     public Skill() {
     }
 
-    public Skill(String skill, int progress) {
+    public Skill(String skill, int progress, String icon) {
        
         this.skill = skill;
         this.progress = progress;
+        this.icon = icon;
     }
     
     

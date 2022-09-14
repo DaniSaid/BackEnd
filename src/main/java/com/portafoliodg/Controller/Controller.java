@@ -139,7 +139,7 @@ public class Controller {
     @PostMapping("/skill/create")
     public ResponseEntity<?> createSkill(@RequestBody SkillDTO skillDTO){
       
-        Skill skill =  new Skill(skillDTO.getSkill(),skillDTO.getProgress());
+        Skill skill =  new Skill(skillDTO.getSkill(),skillDTO.getProgress(), skillDTO.getIcon());
         portfolioS.saveSkill(skill);
         return new ResponseEntity(new State(true,"habilidad agregada!"),HttpStatus.OK);
     }
@@ -153,12 +153,22 @@ public class Controller {
         
         Skill skill = portfolioS.getSkillById(id).get();
         skill.setSkill(skillDTO.getSkill());
+        skill.setProgress(skillDTO.getProgress());
+        skill.setIcon(skillDTO.getIcon());
         
         portfolioS.saveSkill(skill);
         
         return new ResponseEntity(new State(true, "habilidad actualizada"), HttpStatus.OK);
     }
     
+    @DeleteMapping("skill/delete/{id}")
+     public ResponseEntity<?> deleteSkill(@PathVariable("id") Long id){
+         if (!portfolioS.skillExistsById(id)) {
+             return new ResponseEntity(new State(false, "id no existe"), HttpStatus.NOT_FOUND);
+         }
+         portfolioS.deleteSkill(id);
+         return new ResponseEntity(new State(true, "habilidad borrada"), HttpStatus.OK);
+     }
     //------------------Experience---------------------
     
     @GetMapping("/experience/list")

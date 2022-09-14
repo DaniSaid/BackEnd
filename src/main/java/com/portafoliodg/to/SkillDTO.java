@@ -6,13 +6,15 @@ public class SkillDTO {
     @NotBlank
     private String skill;
     private int progress;
+    private String icon;
 
     public SkillDTO() {
     }
 
-    public SkillDTO(String skill, int progress) {
+    public SkillDTO(String skill, int progress, String icon) {
         this.skill = skill;
         this.progress = progress;
+        this.icon = icon;
     }
 
     public String getSkill() {
@@ -30,6 +32,13 @@ public class SkillDTO {
     
     public void setProgress(int progress){
         this.progress = progress;
+    }
+    
+    public String getIcon(){
+        return icon;
+    }
+    public void setIcon(){
+        this.icon = icon;
     }
     
 }
