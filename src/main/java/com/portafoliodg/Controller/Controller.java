@@ -3,12 +3,14 @@ package com.portafoliodg.Controller;
 import com.portafoliodg.Entity.About;
 import com.portafoliodg.Entity.Education;
 import com.portafoliodg.Entity.Experience;
+import com.portafoliodg.Entity.Project;
 import com.portafoliodg.Entity.Skill;
 import com.portafoliodg.Entity.Tool;
 import com.portafoliodg.Service.PortfolioServices;
 import com.portafoliodg.to.EducationDTO;
 import com.portafoliodg.to.ExperienceDTO;
 import com.portafoliodg.to.Portfolio;
+import com.portafoliodg.to.ProjectDTO;
 import com.portafoliodg.to.SkillDTO;
 import com.portafoliodg.to.State;
 import com.portafoliodg.to.ToolDTO;
@@ -116,6 +118,69 @@ public class Controller {
          }
          portfolioS.deleteTool(id);
          return new ResponseEntity(new State(true, "herramienta borrada"), HttpStatus.OK);
+     }
+    
+    //-------------------- Project ----------------------
+    
+    @GetMapping("/projects/list")
+    @ResponseBody
+    public List<Project> getProjectList(){
+        return portfolioS.getProjectList();
+    }
+    
+    @GetMapping("/project/detail/{id}")
+     public ResponseEntity<Project> getProjectById(@PathVariable("id") Long id){
+         if (!portfolioS.projectExistsById(id)) {
+             return new ResponseEntity(new State(false,"id no existe"), HttpStatus.NOT_FOUND);
+         }
+         Project project = portfolioS.getProjectById(id).get();
+         
+         return new ResponseEntity(project, HttpStatus.OK);
+    }
+    
+    @PostMapping("/project/create")
+     public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO){
+          if (StringUtils.isBlank(projectDTO.getRepo()) || StringUtils.isBlank(projectDTO.getNombre())) {
+             return new ResponseEntity(new State(false, "el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+         }
+         
+        Project project = new Project(
+                projectDTO.getNombre(),
+                projectDTO.getDetalle(),
+                projectDTO.getRepo(),
+                projectDTO.getWeb(),
+                projectDTO.getImagen()
+        );
+         portfolioS.saveProject(project);
+         
+         return new ResponseEntity(new State(true, "proyecto creado"), HttpStatus.OK);
+     }
+    
+    @PutMapping("/project/update/{id}")
+    public ResponseEntity<?> updateProject(@PathVariable("id") Long id, @RequestBody ProjectDTO projectDTO){
+           if (StringUtils.isBlank(projectDTO.getRepo())|| StringUtils.isBlank(projectDTO.getNombre())) {
+             return new ResponseEntity(new State(false, "el nombre del proyecto y el link al repositorio son obligatorios"), HttpStatus.BAD_REQUEST);
+         }
+         
+         Project project = portfolioS.getProjectById(id).get();
+         project.setNombre(projectDTO.getNombre());
+         project.setDetalle(projectDTO.getDetalle());
+         project.setRepo(projectDTO.getRepo());
+         project.setWeb(projectDTO.getWeb());
+         project.setImagen(projectDTO.getImagen());
+         
+         portfolioS.saveProject(project);
+         
+         return new ResponseEntity(new State(true, "proyecto actualizado"),HttpStatus.OK);
+     }
+    
+    @DeleteMapping("/project/delete/{id}")
+    public ResponseEntity<?> deleteProject(@PathVariable("id") Long id){
+         if (!portfolioS.projectExistsById(id)) {
+             return new ResponseEntity(new State(false, "id no existe"), HttpStatus.NOT_FOUND);
+         }
+         portfolioS.deleteProject(id);
+         return new ResponseEntity(new State(true, "proyecto borrado"), HttpStatus.OK);
      }
     
     

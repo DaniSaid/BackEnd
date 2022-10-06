@@ -3,15 +3,18 @@ package com.portafoliodg.Service;
 import com.portafoliodg.Entity.About;
 import com.portafoliodg.Entity.Education;
 import com.portafoliodg.Entity.Experience;
+import com.portafoliodg.Entity.Project;
 import com.portafoliodg.Entity.Skill;
 import com.portafoliodg.Entity.Tool;
 import com.portafoliodg.Interface.IEducation;
 import com.portafoliodg.Interface.IExperience;
+import com.portafoliodg.Interface.IProject;
 import com.portafoliodg.Interface.ISkill;
 import com.portafoliodg.Interface.ITool;
 import com.portafoliodg.Repository.AboutRepository;
 import com.portafoliodg.Repository.EducationRepository;
 import com.portafoliodg.Repository.ExperienceRepository;
+import com.portafoliodg.Repository.ProjectRepository;
 import com.portafoliodg.Repository.SkillRepository;
 import com.portafoliodg.Repository.ToolRepository;
 import com.portafoliodg.to.Portfolio;
@@ -24,13 +27,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class PortfolioServices implements ITool, ISkill, IExperience, IEducation{
+public class PortfolioServices implements ITool, ISkill, IExperience, IEducation, IProject{
     
     @Autowired AboutRepository aboutRepo;
     @Autowired ToolRepository toolRepo;
     @Autowired SkillRepository skillRepo;
     @Autowired ExperienceRepository expRepo;
     @Autowired EducationRepository eduRepo;
+    @Autowired ProjectRepository projectRepo;
     
     //-----------Portafolio-----------------
     public Portfolio getPortfolio(long aboutId){
@@ -47,7 +51,7 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
         
     }
     
-    //------------Acerca de ------------------
+    //------------ Acerca de ------------------
     
     public List<About> getAboutList(){
 		List<About> about = aboutRepo.findAll();
@@ -81,7 +85,7 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
         
     }
     
-    //-------------Herramientas--------------------
+    //-------------implementacion de Herramientas--------------------
 
     @Override
     public List<Tool> getToolList() {
@@ -108,7 +112,7 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
         return toolRepo.existsById(id);
     }
     
-    //-------------implementacion de metodos Skill--------------------
+    //-------------implementacion de Skill--------------------
     @Override
     public List<Skill> getSkillList() {
         return skillRepo.findAll();
@@ -136,7 +140,7 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
     }
 
 
-    //-------------implementacion de metodos Experiencia--------------------
+    //-------------implementacion de Experiencia--------------------
     @Override
     public List<Experience> getExperiences() {
         return expRepo.findAll();
@@ -162,7 +166,7 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
         return expRepo.existsById(id);
     }
     
-    //-------------implementacion de metodos Educación--------------------
+    //-------------implementacion de Educación--------------------
 
     @Override
     public List<Education> getEducationList() {
@@ -187,6 +191,32 @@ public class PortfolioServices implements ITool, ISkill, IExperience, IEducation
     @Override
     public boolean eduExistsById(Long id) {
         return eduRepo.existsById(id);
+    }
+    
+    //-------------implementacion de Proyectos--------------------
+    @Override
+    public List<Project> getProjectList() {
+        return projectRepo.findAll();
+    }
+
+    @Override
+    public Optional<Project> getProjectById(Long id) {
+        return projectRepo.findById(id);
+    }
+
+    @Override
+    public void saveProject(Project project) {
+        projectRepo.save(project);
+    }
+
+    @Override
+    public void deleteProject(Long id) {
+        projectRepo.deleteById(id);
+    }
+
+    @Override
+    public boolean projectExistsById(Long id) {
+        return projectRepo.existsById(id);
     }
 
 
