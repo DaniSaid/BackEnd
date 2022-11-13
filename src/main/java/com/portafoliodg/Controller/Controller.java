@@ -41,6 +41,7 @@ public class Controller {
     public Portfolio getPortfolio(@PathVariable int id){
         return portfolioS.getPortfolio(id);
     }
+    
     // -------------------About-----------------
     @GetMapping("/about/list")
     @ResponseBody
