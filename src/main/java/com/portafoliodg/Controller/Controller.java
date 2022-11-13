@@ -38,30 +38,30 @@ public class Controller {
     private PortfolioServices portfolioS;
     
     @GetMapping("/portfolio/{id}")
-    Portfolio getPortfolio(@PathVariable int id){
+    public Portfolio getPortfolio(@PathVariable int id){
         return portfolioS.getPortfolio(id);
     }
     // -------------------About-----------------
     @GetMapping("/about/list")
     @ResponseBody
-    List<About> getAboutList(){
+    public List<About> getAboutList(){
         return portfolioS.getAboutList();
     }
     
     @PostMapping("/about/create")
-    State createAbout(@RequestBody About about){
+    public State createAbout(@RequestBody About about){
         portfolioS.saveAbout(about);
         
         return new State(true, "about creado");
     }
     
     @PutMapping("/about/edit")
-    State editAboutData(@RequestBody About about){
+    public State editAboutData(@RequestBody About about){
         return portfolioS.editAbout(about);
     }
     
     @DeleteMapping("/about/delete/{id}")
-    State deleteAbout(@PathVariable Long id){
+    public State deleteAbout(@PathVariable Long id){
         portfolioS.deleteAbout(id);
         return new State(true, "about borrado");
     }
@@ -203,7 +203,6 @@ public class Controller {
     
     @PostMapping("/skill/create")
     public ResponseEntity<?> createSkill(@RequestBody SkillDTO skillDTO){
-      
         Skill skill =  new Skill(skillDTO.getSkill(),skillDTO.getProgress(), skillDTO.getIcon());
         portfolioS.saveSkill(skill);
         return new ResponseEntity(new State(true,"habilidad agregada!"),HttpStatus.OK);
