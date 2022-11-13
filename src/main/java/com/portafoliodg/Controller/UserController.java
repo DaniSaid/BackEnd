@@ -6,7 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,13 +23,22 @@ public class UserController {
     }
     
     @PostMapping("usuario/crear")
-    public String createUser(User user){
+    public String createUser(@RequestBody User user){
         iuserService.saveUser(user);
         return "nuevo usuario creado";
     }
+    @PutMapping("usuario/editar/{id}")
+    public User editUser(@PathVariable Long id, @RequestParam("nombre") String name, @RequestParam("contraseña") String password){
+        
+        User user = iuserService.findUser(id);
+        user.setUser(name);
+        user.setPassword(password);
+        iuserService.saveUser(user);
+        return user; 
+    }
     
-    @DeleteMapping("usuario/borrar")
-    public String deleteUser(Long id){
+    @DeleteMapping("usuario/borrar/{id}")
+    public String deleteUser(@PathVariable Long id){
         iuserService.deleteUser(id);
         return "usuario borrado";
     }
